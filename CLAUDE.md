@@ -21,6 +21,7 @@
 | 设计规范 | [docs/design-spec.md](docs/design-spec.md) | 颜色、尺寸、字体、动效精确数值 |
 | 计算逻辑 | [docs/calculation-logic.md](docs/calculation-logic.md) | 公式、系数表、示例计算、边界处理 |
 | 执行计划 | [docs/implementation-steps.md](docs/implementation-steps.md) | 分阶段步骤 |
+| **SOP 复盘** | [docs/sop-lessons-learned.md](docs/sop-lessons-learned.md) | 问题分析 + 可复用打包指南 |
 
 ## 开发日志
 
