@@ -62,11 +62,35 @@ class Launcher
             ZipFile.ExtractToDirectory(zipPath, dir);
             File.Delete(zipPath);
 
-            string html = Path.Combine(dir, "index.html");
-            string url = "file:///" + html.Replace("\\\\", "/");
-            Process.Start("msedge", "--app=\\"" + url + "\\"");
+            string url = "file:///" + Path.Combine(dir, "index.html").Replace("\\\\", "/");
+            OpenBrowser(url);
         }
         catch { }
+    }
+
+    static void OpenBrowser(string url)
+    {
+        // 1. WebView2 runtime (Win10 21H2+ / Win11)
+        string[] roots = {
+            @"C:\\\\Program Files (x86)\\\\Microsoft\\\\EdgeWebView\\\\Application",
+            @"C:\\\\Program Files\\\\Microsoft\\\\EdgeWebView\\\\Application" };
+        foreach (string root in roots)
+        {
+            if (!Directory.Exists(root)) continue;
+            foreach (string ver in Directory.GetDirectories(root))
+            {
+                string exe = Path.Combine(ver, "msedgewebview2.exe");
+                if (!File.Exists(exe)) continue;
+                try { Process.Start(exe, "--app=" + url + " --window-size=520,640"); return; } catch { }
+            }
+        }
+        // 2. Common browsers
+        foreach (string b in new[]{"msedge","chrome","firefox"})
+        {
+            try { Process.Start(b, "--app=" + url); return; } catch { }
+        }
+        // 3. OS default
+        try { Process.Start(url); } catch { }
     }
 
     static void ExtractRes(string name, string path)
