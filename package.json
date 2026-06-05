@@ -4,7 +4,7 @@
   "description": "房间空调制冷量匹配工具",
   "scripts": {
     "start": ".\\bin\\neutralino-win_x64.exe --load-dir-res --path=.",
-    "build": "neu build"
+    "build": "neu build && node scripts/build-sfx.js"
   },
   "license": "MIT",
   "devDependencies": {

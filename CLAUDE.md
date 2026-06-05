@@ -8,7 +8,7 @@
 
 - **Neutralinojs v6.8.0** — 轻量桌面框架（调用系统 WebView2，Win11 自带）
 - **前端**：HTML + CSS + Vanilla JS
-- **打包**：`neu build --embed-resources` 输出单文件 portable .exe
+- **打包**：`neu build` → C# 自解压包装（`csc.exe /resource` + SFX launcher）→ 单文件 .exe
 - **窗口控制**：使用 `Neutralino.window` / `Neutralino.app` API
 
 ## 标准文件路径
@@ -32,7 +32,7 @@
 
 ```bash
 npm start                     # 启动应用（开发模式）
-npm run build                 # 打包（含 --embed-resources）
+npm run build                 # 完整打包流程：neu build → C# 自解压 .exe
 ```
 
 ## 关键文件
@@ -40,9 +40,9 @@ npm run build                 # 打包（含 --embed-resources）
 | 文件 | 作用 |
 |------|------|
 | [neutralino.config.json](neutralino.config.json) | Neutralinojs 窗口/构建配置 |
-| [renderer/index.html](renderer/index.html) | 主界面 |
-| [renderer/style.css](renderer/style.css) | Win11 风格样式 |
-| [renderer/app.js](renderer/app.js) | 计算引擎 + 交互 |
+| [resources/index.html](resources/index.html) | 主界面 |
+| [resources/style.css](resources/style.css) | Win11 风格样式 |
+| [resources/app.js](resources/app.js) | 计算引擎 + 交互 |
 | [AC-Cooling-Calculator.exe](AC-Cooling-Calculator.exe) | 最终交付的便携 .exe |
 
 ## 关键常量（禁止随意修改）
