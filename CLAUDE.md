@@ -8,7 +8,8 @@
 
 - **Neutralinojs v6.8.0** — 轻量桌面框架（调用系统 WebView2，Win11 自带）
 - **前端**：HTML + CSS + Vanilla JS
-- **打包**：`neu build` → C# 自解压包装（`csc.exe /resource` + SFX launcher）→ 单文件 .exe
+- **打包**：`neu build` → PowerShell ZIP → C# 自解压 (`csc.exe /resource`) → 单文件 .exe
+- **运行时**：SFX 提取到 `%TEMP%`，PowerShell 解压，`--load-dir-res` 模式启动
 - **窗口控制**：使用 `Neutralino.window` / `Neutralino.app` API
 
 ## 标准文件路径
