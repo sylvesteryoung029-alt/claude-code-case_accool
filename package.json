@@ -1,0 +1,36 @@
+{
+  "name": "ac-cooling-calculator",
+  "version": "1.0.0",
+  "description": "房间空调制冷量匹配工具",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": ".\\node_modules\\.electron-pkg\\dist\\electron.exe .",
+    "build": "electron-builder"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.accool.calculator",
+    "productName": "空调制冷量计算器",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.png"
+    },
+    "portable": {
+      "artifactName": "AC-Cooling-Calculator.exe"
+    },
+    "files": [
+      "main.js",
+      "preload.cjs",
+      "renderer/**/*",
+      "assets/**/*"
+    ]
+  }
+}

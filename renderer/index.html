@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>空调制冷量计算器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="window" id="app-window">
+    <!-- 自定义标题栏（仅在 Electron 中显示） -->
+    <header class="titlebar" id="titlebar">
+      <span class="titlebar-icon">🧊</span>
+      <span class="titlebar-text">空调制冷量计算器</span>
+      <div class="titlebar-controls">
+        <button class="titlebar-btn" id="btn-minimize" title="最小化">─</button>
+        <button class="titlebar-btn" id="btn-close" title="关闭">✕</button>
+      </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="content">
+      <p class="subtitle">输入房间参数，智能匹配空调制冷量</p>
+
+      <!-- 表单区 -->
+      <div class="form-group">
+        <label for="city">城市</label>
+        <select id="city">
+          <option value="" disabled selected>请选择城市</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="area">房间面积</label>
+        <div class="input-with-unit">
+          <input type="number" id="area" placeholder="例如 20" min="1" max="500" step="0.1">
+          <span class="unit">平方米</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="window-area">窗户面积</label>
+        <div class="input-with-unit">
+          <input type="number" id="window-area" placeholder="例如 3" min="0" max="200" step="0.1">
+          <span class="unit">平方米</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="floor">所在楼层</label>
+        <div class="input-row">
+          <div class="input-with-unit">
+            <input type="number" id="floor" placeholder="例如 5" min="1" max="200" step="1">
+            <span class="unit">层</span>
+          </div>
+          <label class="checkbox-label">
+            <input type="checkbox" id="top-floor">
+            <span>是否为顶层</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="orientation">房间朝向</label>
+        <select id="orientation">
+          <option value="" disabled selected>请选择朝向</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="people">常住人数</label>
+        <div class="input-with-unit">
+          <input type="number" id="people" placeholder="例如 2" min="1" max="50" step="1">
+          <span class="unit">人</span>
+        </div>
+      </div>
+
+      <!-- 计算按钮 -->
+      <button class="btn-calculate" id="btn-calculate">
+        <span>❄️</span>
+        <span>计算制冷量</span>
+      </button>
+
+      <!-- 结果显示区 -->
+      <div class="result-card" id="result-card">
+        <div class="result-header">推荐制冷量</div>
+        <div class="result-values">
+          <div class="result-item result-kw">
+            <span class="result-number" id="result-kw">—</span>
+            <span class="result-unit">kW</span>
+          </div>
+          <div class="result-divider"></div>
+          <div class="result-item result-hp">
+            <span class="result-number" id="result-hp">—</span>
+            <span class="result-unit">匹</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

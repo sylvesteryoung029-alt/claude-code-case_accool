@@ -1,0 +1,417 @@
+/**
+ * 空调制冷量计算器 — 全局样式
+ * Windows 11 Fluent Design: 圆角、毛玻璃、淡蓝色主调
+ */
+
+/* ========== CSS 变量 ========== */
+:root {
+  --color-primary: #A2D2FF;
+  --color-primary-hover: #7BB8E8;
+  --color-primary-active: #6AA8D8;
+  --color-bg: rgba(200, 220, 240, 0.55);
+  --color-card: rgba(255, 255, 255, 0.75);
+  --color-input-bg: rgba(255, 255, 255, 0.6);
+  --color-input-border: rgba(160, 180, 210, 0.5);
+  --color-text: #1A1A2E;
+  --color-text-secondary: #5A5A7A;
+  --color-text-placeholder: #9A9AB0;
+  --color-kw: #FF6B6B;
+  --color-hp: #4ECDC4;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --color-titlebar-bg: rgba(255, 255, 255, 0.15);
+  --color-close-hover: #E81123;
+  --radius-window: 12px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* ========== 基础重置 ========== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--color-text);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 浏览器模式：居中显示，添加背景 */
+body.browser-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #E8F0FE 0%, #D4E4F8 50%, #C8DCF0 100%);
+}
+
+body.browser-mode .window {
+  border: 1px solid rgba(160, 180, 210, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Electron 模式：透明背景 */
+body:not(.browser-mode) {
+  background: transparent;
+}
+
+/* ========== 窗口容器 ========== */
+.window {
+  width: 520px;
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-window);
+  overflow: hidden;
+
+  /* 毛玻璃效果 */
+  background: var(--color-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* 圆角下的边框微光 */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+/* ========== 标题栏 ========== */
+.titlebar {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  min-height: 36px;
+  padding: 0 12px;
+  background: var(--color-titlebar-bg);
+  flex-shrink: 0;
+}
+
+/* Electron 模式下标题栏可拖拽 */
+body:not(.browser-mode) .titlebar {
+  -webkit-app-region: drag;
+}
+
+.titlebar-icon {
+  font-size: 16px;
+  margin-right: 8px;
+  line-height: 1;
+}
+
+.titlebar-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  flex: 1;
+}
+
+.titlebar-controls {
+  display: flex;
+  gap: 8px;
+}
+
+/* Electron 模式下按钮不可拖拽 */
+body:not(.browser-mode) .titlebar-controls {
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+  line-height: 1;
+}
+
+.titlebar-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--color-text);
+}
+
+#btn-close:hover {
+  background: var(--color-close-hover);
+  color: #fff;
+}
+
+/* 浏览器模式隐藏标题栏按钮功能 */
+body.browser-mode .titlebar-controls {
+  display: none;
+}
+
+/* ========== 主内容区 ========== */
+.content {
+  flex: 1;
+  padding: 20px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  gap: 14px;
+}
+
+.content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(160, 180, 210, 0.4);
+  border-radius: 2px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* ========== 表单控件 ========== */
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* 下拉选择框 */
+select {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-control);
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235A5A7A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.3);
+}
+
+/* 输入框 */
+input[type="number"] {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-control);
+  background: var(--color-input-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="number"]::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+input[type="number"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(162, 210, 255, 0.3);
+}
+
+/* 隐藏数字输入框的上下箭头 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 带单位的输入框 */
+.input-with-unit {
+  position: relative;
+  flex: 1;
+}
+
+.input-with-unit input {
+  padding-right: 56px;
+}
+
+.input-with-unit .unit {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+/* 输入行（横向排列） */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 复选框 */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* ========== 计算按钮 ========== */
+.btn-calculate {
+  width: 200px;
+  height: 44px;
+  border: none;
+  border-radius: var(--radius-control);
+  background: var(--color-primary);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  margin-top: 4px;
+}
+
+.btn-calculate:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(162, 210, 255, 0.4);
+}
+
+.btn-calculate:active {
+  background: var(--color-primary-active);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ========== 结果卡片 ========== */
+.result-card {
+  width: 100%;
+  padding: 20px 24px;
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.result-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.result-header {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.result-values {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.result-item {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.result-number {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.result-kw .result-number {
+  color: var(--color-kw);
+}
+
+.result-hp .result-number {
+  color: var(--color-hp);
+}
+
+.result-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.result-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(160, 180, 210, 0.4);
+  border-radius: 1px;
+}
+
+/* ========== 错误提示 ========== */
+.toast {
+  position: fixed;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: var(--radius-control);
+  background: rgba(255, 75, 75, 0.9);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(255, 75, 75, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+}
