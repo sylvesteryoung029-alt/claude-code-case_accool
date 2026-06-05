@@ -57,9 +57,19 @@ body.browser-mode .window {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* Electron 模式：透明背景 */
+/* Neutralino/Electron 模式：透明背景 */
 body:not(.browser-mode) {
   background: transparent;
+}
+
+/* 桌面模式下，整个窗口可拖拽，交互元素需要 no-drag */
+body:not(.browser-mode) .content,
+body:not(.browser-mode) .titlebar-controls,
+body:not(.browser-mode) input,
+body:not(.browser-mode) select,
+body:not(.browser-mode) button,
+body:not(.browser-mode) .btn-calculate {
+  -webkit-app-region: no-drag;
 }
 
 /* ========== 窗口容器 ========== */
@@ -91,7 +101,7 @@ body:not(.browser-mode) {
   flex-shrink: 0;
 }
 
-/* Electron 模式下标题栏可拖拽 */
+/* 桌面模式下标题栏可拖拽 */
 body:not(.browser-mode) .titlebar {
   -webkit-app-region: drag;
 }

@@ -2,14 +2,14 @@
 
 ## 项目简介
 
-一款 Windows 11 风格的桌面工具，帮助用户根据房间属性计算所需空调制冷量，输出 kW 和匹两种单位。基于 Electron 28 构建，打包为单个 .exe。
+一款 Windows 11 风格的桌面工具，帮助用户根据房间属性计算所需空调制冷量，输出 kW 和匹两种单位。基于 Neutralinojs 构建，打包为单个 .exe（仅 ~1.7MB）。
 
 ## 技术栈
 
-- **Electron 28** + ESM (`"type": "module"`)
-- **主进程**：`import electron from "electron/main"`（ESM 语法）
-- **预加载**：`require("electron/renderer")`（CJS，`.cjs` 扩展名）
-- **关键约定**：npm `electron` 包被重命名为 `node_modules/.electron-pkg/` 以免遮蔽 Electron 内置模块
+- **Neutralinojs v6.8.0** — 轻量桌面框架（调用系统 WebView2，Win11 自带）
+- **前端**：HTML + CSS + Vanilla JS
+- **打包**：`neu build --embed-resources` 输出单文件 portable .exe
+- **窗口控制**：使用 `Neutralino.window` / `Neutralino.app` API
 
 ## 标准文件路径
 
@@ -31,18 +31,19 @@
 ## 快速命令
 
 ```bash
-npm start          # 启动应用（开发模式）
-npm run build      # 打包为 .exe
+npm start                     # 启动应用（开发模式）
+npm run build                 # 打包（含 --embed-resources）
 ```
 
-## 启动说明
+## 关键文件
 
-由于 npm `electron` 包的 index.js 会遮蔽 Electron 运行时的内置模块，本项目的 `node_modules/electron` 被重命名为 `node_modules/.electron-pkg/`。`npm start` 脚本直接调用 `.electron-pkg/dist/electron.exe` 启动。
-
-打包时需先恢复目录名：
-```bash
-mv node_modules/.electron-pkg node_modules/electron && npm run build
-```
+| 文件 | 作用 |
+|------|------|
+| [neutralino.config.json](neutralino.config.json) | Neutralinojs 窗口/构建配置 |
+| [renderer/index.html](renderer/index.html) | 主界面 |
+| [renderer/style.css](renderer/style.css) | Win11 风格样式 |
+| [renderer/app.js](renderer/app.js) | 计算引擎 + 交互 |
+| [AC-Cooling-Calculator.exe](AC-Cooling-Calculator.exe) | 最终交付的便携 .exe |
 
 ## 关键常量（禁止随意修改）
 
@@ -58,7 +59,7 @@ mv node_modules/.electron-pkg node_modules/electron && npm run build
 | 阶段 | 状态 |
 |------|------|
 | 阶段 0：项目初始化 | ✅ 完成 |
-| 阶段 1：Electron 骨架 | ✅ 完成 |
+| 阶段 1：项目骨架 | ✅ 完成 |
 | 阶段 2：前端界面 | ✅ 完成 |
 | 阶段 3：计算逻辑 | ✅ 完成 |
-| 阶段 4：打包 | ⏳ 待开始 |
+| 阶段 4：打包 | ✅ 完成 |

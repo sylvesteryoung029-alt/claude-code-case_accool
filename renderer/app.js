@@ -1,6 +1,6 @@
 /**
  * 空调制冷量计算器 — 前端逻辑
- * 包含：气候数据、计算公式、表单交互、输入验证、Electron 窗口控制
+ * 包含：气候数据、计算公式、表单交互、输入验证、桌面窗口控制
  */
 
 // ==============================
@@ -92,12 +92,12 @@ const elTitlebar = document.getElementById("titlebar");
 // ==============================
 
 /**
- * 检测运行环境：浏览器 or Electron
+ * 检测运行环境：浏览器 or 桌面应用
  */
 function detectEnvironment() {
-  // Electron 环境下 windowControls 由 preload 提供
-  const isElectron = typeof window.windowControls !== "undefined";
-  return { isElectron };
+  // Neutralinojs 环境下 Neutralino 全局对象可用
+  const isDesktop = typeof Neutralino !== "undefined" && Neutralino.app;
+  return { isDesktop };
 }
 
 /**
@@ -323,15 +323,21 @@ function bindEvents() {
     }
   });
 
-  // Electron 窗口控制按钮
+  // 桌面窗口控制按钮（Neutralinojs）
   const env = detectEnvironment();
-  if (env.isElectron) {
-    document.getElementById("btn-minimize").addEventListener("click", () => {
-      window.windowControls.minimize();
-    });
-    document.getElementById("btn-close").addEventListener("click", () => {
-      window.windowControls.close();
-    });
+  if (env.isDesktop) {
+    const btnMin = document.getElementById("btn-minimize");
+    const btnClose = document.getElementById("btn-close");
+    if (btnMin) {
+      btnMin.addEventListener("click", () => {
+        Neutralino.window.minimize();
+      });
+    }
+    if (btnClose) {
+      btnClose.addEventListener("click", () => {
+        Neutralino.app.exit();
+      });
+    }
   }
 }
 
@@ -342,7 +348,7 @@ function bindEvents() {
 document.addEventListener("DOMContentLoaded", () => {
   // 检测环境并设置 body class
   const env = detectEnvironment();
-  if (!env.isElectron) {
+  if (!env.isDesktop) {
     document.body.classList.add("browser-mode");
   }
 
