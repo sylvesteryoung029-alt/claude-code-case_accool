@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "房间空调制冷量匹配工具",
   "scripts": {
-    "start": ".\\bin\\neutralino-win_x64.exe --load-dir-res --path=.",
-    "build": "neu build && node scripts/build-sfx.js"
+    "start": "start msedge --app=\"file:///C:/Users/Administrator/accool/resources/index.html\"",
+    "build": "node scripts/build-sfx.js"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "@neutralinojs/neu": "^11.0.0"
-  }
+  "license": "MIT"
 }

@@ -2,15 +2,15 @@
 
 ## 项目简介
 
-一款 Windows 11 风格的桌面工具，帮助用户根据房间属性计算所需空调制冷量，输出 kW 和匹两种单位。基于 Neutralinojs 构建，打包为单个 .exe（仅 ~1.7MB）。
+一款 Windows 11 风格的桌面工具，帮助用户根据房间属性计算所需空调制冷量，输出 kW 和匹两种单位。基于 Windows 原生 WebView2 (Edge) 构建，打包为单个 .exe（仅 ~13KB）。
 
 ## 技术栈
 
-- **Neutralinojs v6.8.0** — 轻量桌面框架（调用系统 WebView2，Win11 自带）
+- **渲染引擎**：Windows 11 自带 Microsoft Edge WebView2（`msedge --app` 模式）
 - **前端**：HTML + CSS + Vanilla JS
-- **打包**：`neu build` → PowerShell ZIP → C# 自解压 (`csc.exe /resource`) → 单文件 .exe
-- **运行时**：SFX 提取到 `%TEMP%`，PowerShell 解压，`--load-dir-res` 模式启动
-- **窗口控制**：使用 `Neutralino.window` / `Neutralino.app` API
+- **启动器**：C# 自解压程序（提取网页资源到 %TEMP%，调用 Edge 打开）
+- **打包**：PowerShell ZIP → C# `/resource` 嵌入 → `csc.exe` 编译 → 单文件 .exe（~13KB）
+- **窗口控制**：`window.close()` / Edge 原生窗口控件
 
 ## 标准文件路径
 
@@ -32,19 +32,19 @@
 ## 快速命令
 
 ```bash
-npm start                     # 启动应用（开发模式）
-npm run build                 # 完整打包流程：neu build → C# 自解压 .exe
+npm start                     # 浏览器开发模式
+npm run build                 # 打包单文件 .exe（~13KB）
 ```
 
 ## 关键文件
 
 | 文件 | 作用 |
 |------|------|
-| [neutralino.config.json](neutralino.config.json) | Neutralinojs 窗口/构建配置 |
 | [resources/index.html](resources/index.html) | 主界面 |
 | [resources/style.css](resources/style.css) | Win11 风格样式 |
 | [resources/app.js](resources/app.js) | 计算引擎 + 交互 |
-| [AC-Cooling-Calculator.exe](AC-Cooling-Calculator.exe) | 最终交付的便携 .exe |
+| [scripts/build-sfx.js](scripts/build-sfx.js) | 打包脚本 |
+| [AC-Cooling-Calculator.exe](AC-Cooling-Calculator.exe) | 最终交付的便携 .exe（~13KB） |
 
 ## 关键常量（禁止随意修改）
 
